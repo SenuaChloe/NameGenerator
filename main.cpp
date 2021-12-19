@@ -1,5 +1,5 @@
 #include <iostream>
-#include "SyllablesReader.h"
+#include "SyllableAssociator.h"
 
 
 using namespace std;
@@ -16,7 +16,7 @@ int main()
 
     const std::string range_string = "Syllabes";
 
-    const std::string syllables_filename = "Syllabes.csv";
+    const std::string syllables_filename = "SyllableAssociations.csv";
 
     SyllablesReader syllable_reader(syllables_filename, association_strings, range_string);
     auto c_list = syllable_reader.get_consonance_list();

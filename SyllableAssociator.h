@@ -24,7 +24,7 @@ class SyllablesReader
         **/
         SyllablesReader(const std::filesystem::path & filepath, const std::map<std::string, SyllableType> & syllable_string_pairing, const std::string & count_range_string);
 
-        ~SyllablesReader();
+        virtual ~SyllablesReader();
 
         /**
         ** @brief computes the list of consonances and returns it

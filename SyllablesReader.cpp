@@ -53,8 +53,29 @@ std::vector<std::string> SyllablesReader::get_consonance_list() const
 
 
 /******************************************************************************/
+static std::string syllable_type_to_string(SyllablesReader::SyllableType type)
+{
+    switch (type)
+    {
+        break; case SyllablesReader::SyllableType::PREFIX:
+            return "PREFIX";
+        break; case SyllablesReader::SyllableType::MIDDLE:
+            return "MIDDLE";
+        break; case SyllablesReader::SyllableType::SUFFIX:
+            return "SUFFIX";
+        break; case SyllablesReader::SyllableType::PARTICLE:
+            return "PARTICLE";
+    }
+}
+
+/******************************************************************************/
 std::string SyllablesReader::get_random_syllable(const std::string & consonance, SyllableType type) const
 {
+    if (m_syllable_dictionary.count(consonance) == 0)
+        ErrorHandler::raise_error("Consonance '", consonance, "' not found");
+    else if (m_syllable_dictionary.at(consonance).syllables.count(type) == 0)
+        ErrorHandler::raise_error("Type '", syllable_type_to_string(type), "' for consonance '", consonance, "' not found");
+
     const SyllableList & available_syllables = m_syllable_dictionary.at(consonance).syllables.at(type);
     const size_t modulo = available_syllables.size();
     const size_t rindex = static_cast<size_t>(std::rand()) % modulo;
@@ -65,6 +86,9 @@ std::string SyllablesReader::get_random_syllable(const std::string & consonance,
 /******************************************************************************/
 int SyllablesReader::get_random_syllable_count(const std::string & consonance) const
 {
+    if (m_syllable_dictionary.count(consonance) == 0)
+        ErrorHandler::raise_error("Consonance '", consonance, "' not found");
+
     const IntRange & range = m_syllable_dictionary.at(consonance).syllable_count_range;
     const int modulo = range.max-range.min+1;
     const int rcount = std::rand() % modulo + range.min;
@@ -76,7 +100,6 @@ int SyllablesReader::get_random_syllable_count(const std::string & consonance) c
 
 std::string SyllablesReader::generate_random_name(const std::string & consonance) const
 {
-    /// @TODO À protéger
     std::string result;
     const int s_count = std::max(get_random_syllable_count(consonance)-2, 0);
     result += get_random_syllable(consonance, SyllableType::PREFIX);
@@ -91,7 +114,6 @@ std::string SyllablesReader::generate_random_name(const std::string & consonance
 /******************************************************************************/
 std::string SyllablesReader::generate_random_particle(const std::string & consonance) const
 {
-    /// @TODO À protéger
     return get_random_syllable(consonance, SyllableType::PARTICLE);
 }
 

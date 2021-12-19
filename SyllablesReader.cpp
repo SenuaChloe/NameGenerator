@@ -1,6 +1,7 @@
 #include "SyllablesReader.h"
-#include "CSVReader.h"
 
+#include "CSVReader.h"
+#include <iostream>
 
 /******************************************************************************/
 SyllablesReader::SyllablesReader(const std::filesystem::path & filepath, const std::map<std::string, SyllableType> & syllable_string_pairing, const std::string & count_range_string)
@@ -23,6 +24,11 @@ SyllablesReader::SyllablesReader(const std::filesystem::path & filepath, const s
         }
         else
         {
+            if (syllable_string_pairing.find(type_label) == syllable_string_pairing.cend())
+            {
+                std::cerr << "Error: Syllable type '" << type_label << "' is unknown" << std::endl;
+                throw std::invalid_argument("Unknown label");
+            }
             const auto type = syllable_string_pairing.at(type_label);
             for ( ; it != line.cend() ; ++it)
                 m_syllable_dictionary[consonance].syllables[type].push_back(*it);
@@ -66,4 +72,27 @@ int SyllablesReader::get_random_syllable_count(const std::string & consonance) c
     return rcount;
 }
 
+
+/******************************************************************************/
+
+std::string SyllablesReader::generate_random_name(const std::string & consonance) const
+{
+    /// @TODO À protéger
+    std::string result;
+    const int s_count = std::max(get_random_syllable_count(consonance)-2, 0);
+    result += get_random_syllable(consonance, SyllableType::PREFIX);
+    for (int i = 0 ; i < s_count ; ++i)
+        result += get_random_syllable(consonance, SyllableType::MIDDLE);
+    result += get_random_syllable(consonance, SyllableType::SUFFIX);
+
+    return result;
+}
+
+
+/******************************************************************************/
+std::string SyllablesReader::generate_random_particle(const std::string & consonance) const
+{
+    /// @TODO À protéger
+    return get_random_syllable(consonance, SyllableType::PARTICLE);
+}
 

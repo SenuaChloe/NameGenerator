@@ -1,13 +1,15 @@
 #include "CSVReader.h"
 
 #include <fstream>
-
-//#include <boost/any.hpp>
+#include <algorithm>
+#include <iostream>
 
 const std::vector<char> CSVReader::C_SEPARATORS = {',',';'};
 
 CSVReader::CSVReader(const std::filesystem::path & filepath)
 {
+    /// @TODO À protéger
+
     // Create an input filestream
     std::ifstream csv_file(filepath);
 
@@ -16,9 +18,23 @@ CSVReader::CSVReader(const std::filesystem::path & filepath)
     // Read data, line by line
     while(std::getline(csv_file, line))
     {
+        if (line.size() == 0)
+            continue;
+
         // Getting and splitting the line
         std::vector<std::string> split_line;
-        //boost::algorithm::split(split_line, line, boost::is_any_of(C_SEPARATORS));
+
+        size_t left = 0;
+        for (size_t right = 0 ; right < line.size() ; ++right)
+        {
+            if (std::find(C_SEPARATORS.cbegin(), C_SEPARATORS.cend(), line[right]) != C_SEPARATORS.cend())
+            {
+                split_line.push_back(line.substr(left, right-left));
+                left = right+1;
+            }
+        }
+        split_line.push_back(line.substr(left, line.size()-left));
+
         m_csv_data.push_back(split_line);
 
         // Trimming the last cells if they are empty

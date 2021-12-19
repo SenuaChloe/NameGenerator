@@ -7,25 +7,23 @@ using namespace std;
 
 int main()
 {
-    map<std::string, SyllablesReader::SyllableType> as;
-    as["Debut"] = SyllablesReader::SyllableType::PREFIX;
-    as["Milieu"] = SyllablesReader::SyllableType::MIDDLE;
-    as["Fin"] = SyllablesReader::SyllableType::SUFFIX;
-    as["Particule"] = SyllablesReader::SyllableType::PARTICLE;
+    std::srand(time(0));
 
-    const std::string rs = "Syllabes";
+    map<std::string, SyllablesReader::SyllableType> association_strings;
+    association_strings["Debut"] = SyllablesReader::SyllableType::PREFIX;
+    association_strings["Milieu"] = SyllablesReader::SyllableType::MIDDLE;
+    association_strings["Fin"] = SyllablesReader::SyllableType::SUFFIX;
+    association_strings["Particule"] = SyllablesReader::SyllableType::PARTICLE;
 
-    SyllablesReader sr("Syllabes.csv", as, rs);
-    auto l = sr.get_consonance_list();
+    const std::string range_string = "Syllabes";
 
-    for (auto item : l)
-    {
-        std::cout << sr.get_random_syllable_count(item)
-            << " " << sr.get_random_syllable(item, SyllablesReader::SyllableType::PREFIX)
-            << " " << sr.get_random_syllable(item, SyllablesReader::SyllableType::MIDDLE)
-            << " " << sr.get_random_syllable(item, SyllablesReader::SyllableType::SUFFIX)
-            << std::endl;
-    }
+    const std::string syllables_filename = "Syllabes.csv";
+
+    SyllablesReader syllable_reader(syllables_filename, association_strings, range_string);
+    auto c_list = syllable_reader.get_consonance_list();
+
+    for (auto c : c_list)
+        std::cout << syllable_reader.generate_random_name(c) << std::endl;
 
     return 0;
 }

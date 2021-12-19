@@ -1,7 +1,8 @@
-#include "SyllablesReader.h"
-
-#include "CSVReader.h"
 #include <iostream>
+#include "CSVReader.h"
+#include "ErrorHandler.h"
+
+#include "SyllablesReader.h"
 
 /******************************************************************************/
 SyllablesReader::SyllablesReader(const std::filesystem::path & filepath, const std::map<std::string, SyllableType> & syllable_string_pairing, const std::string & count_range_string)
@@ -25,10 +26,8 @@ SyllablesReader::SyllablesReader(const std::filesystem::path & filepath, const s
         else
         {
             if (syllable_string_pairing.find(type_label) == syllable_string_pairing.cend())
-            {
-                std::cerr << "Error: Syllable type '" << type_label << "' is unknown" << std::endl;
-                throw std::invalid_argument("Unknown label");
-            }
+                ErrorHandler::raise_error("Error: Syllable type '", type_label, "' is unknown");
+
             const auto type = syllable_string_pairing.at(type_label);
             for ( ; it != line.cend() ; ++it)
                 m_syllable_dictionary[consonance].syllables[type].push_back(*it);

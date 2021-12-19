@@ -1,8 +1,8 @@
-#include "CSVReader.h"
-
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+
+#include "CSVReader.h"
 
 const std::vector<char> CSVReader::C_SEPARATORS = {',',';'};
 

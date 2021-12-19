@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="LCDR - Générateur de noms" />
+		<Option title="LCDR - Name generator" />
 		<Option pch_mode="2" />
 		<Option compiler="clang" />
 		<Build>
@@ -14,6 +14,7 @@
 				<Compiler>
 					<Add option="-ggdb" />
 					<Add directory="include" />
+					<Add directory="../LCDR - Générateur de noms" />
 				</Compiler>
 				<Linker>
 					<Add option="-ggdb" />
@@ -27,6 +28,7 @@
 				<Compiler>
 					<Add option="-O3" />
 					<Add directory="include" />
+					<Add directory="../LCDR - Générateur de noms" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -38,13 +40,16 @@
 			<Add option="-std=c++20" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Associations.csv" />
 		<Unit filename="CSVReader.cpp" />
 		<Unit filename="CSVReader.h" />
+		<Unit filename="ErrorHandler.h" />
+		<Unit filename="NameAssociations.csv" />
+		<Unit filename="NameAssociator.cpp" />
+		<Unit filename="NameAssociator.h" />
 		<Unit filename="README.md" />
-		<Unit filename="Syllabes.csv" />
-		<Unit filename="SyllablesReader.cpp" />
-		<Unit filename="SyllablesReader.h" />
+		<Unit filename="SyllableAssociations.csv" />
+		<Unit filename="SyllableAssociator.cpp" />
+		<Unit filename="SyllableAssociator.h" />
 		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>

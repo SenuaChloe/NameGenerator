@@ -1,6 +1,6 @@
 #include "NameAssociator.h"
 
-NameAssociator::NameAssociator()
+NameAssociator::NameAssociator(SyllableAssociator syllable_reader, SymbolNameAssociation symbol_name_association)
 {
     //ctor
 }

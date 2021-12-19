@@ -2,10 +2,10 @@
 #include "CSVReader.h"
 #include "ErrorHandler.h"
 
-#include "SyllablesReader.h"
+#include "SyllableAssociator.h"
 
 /******************************************************************************/
-SyllablesReader::SyllablesReader(const std::filesystem::path & filepath, const std::map<std::string, SyllableType> & syllable_string_pairing, const std::string & count_range_string)
+SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath, const SyllablePairing & syllable_string_pairing, const std::string & count_range_string)
 {
     CSVReader csv_reader(filepath);
 
@@ -37,13 +37,13 @@ SyllablesReader::SyllablesReader(const std::filesystem::path & filepath, const s
 
 
 /******************************************************************************/
-SyllablesReader::~SyllablesReader()
+SyllableAssociator::~SyllableAssociator()
 {
 }
 
 
 /******************************************************************************/
-std::vector<std::string> SyllablesReader::get_consonance_list() const
+std::vector<std::string> SyllableAssociator::get_consonance_list() const
 {
     std::vector<std::string> consonance_list;
     for (const auto & item : m_syllable_dictionary)
@@ -53,23 +53,23 @@ std::vector<std::string> SyllablesReader::get_consonance_list() const
 
 
 /******************************************************************************/
-static std::string syllable_type_to_string(SyllablesReader::SyllableType type)
+static std::string syllable_type_to_string(SyllableAssociator::SyllableType type)
 {
     switch (type)
     {
-        break; case SyllablesReader::SyllableType::PREFIX:
+        break; case SyllableAssociator::SyllableType::PREFIX:
             return "PREFIX";
-        break; case SyllablesReader::SyllableType::MIDDLE:
+        break; case SyllableAssociator::SyllableType::MIDDLE:
             return "MIDDLE";
-        break; case SyllablesReader::SyllableType::SUFFIX:
+        break; case SyllableAssociator::SyllableType::SUFFIX:
             return "SUFFIX";
-        break; case SyllablesReader::SyllableType::PARTICLE:
+        break; case SyllableAssociator::SyllableType::PARTICLE:
             return "PARTICLE";
     }
 }
 
 /******************************************************************************/
-std::string SyllablesReader::get_random_syllable(const std::string & consonance, SyllableType type) const
+std::string SyllableAssociator::get_random_syllable(const std::string & consonance, SyllableType type) const
 {
     if (m_syllable_dictionary.count(consonance) == 0)
         ErrorHandler::raise_error("Consonance '", consonance, "' not found");
@@ -84,7 +84,7 @@ std::string SyllablesReader::get_random_syllable(const std::string & consonance,
 
 
 /******************************************************************************/
-int SyllablesReader::get_random_syllable_count(const std::string & consonance) const
+int SyllableAssociator::get_random_syllable_count(const std::string & consonance) const
 {
     if (m_syllable_dictionary.count(consonance) == 0)
         ErrorHandler::raise_error("Consonance '", consonance, "' not found");
@@ -98,7 +98,7 @@ int SyllablesReader::get_random_syllable_count(const std::string & consonance) c
 
 /******************************************************************************/
 
-std::string SyllablesReader::generate_random_name(const std::string & consonance) const
+std::string SyllableAssociator::generate_random_name(const std::string & consonance) const
 {
     std::string result;
     const int s_count = std::max(get_random_syllable_count(consonance)-2, 0);
@@ -112,7 +112,7 @@ std::string SyllablesReader::generate_random_name(const std::string & consonance
 
 
 /******************************************************************************/
-std::string SyllablesReader::generate_random_particle(const std::string & consonance) const
+std::string SyllableAssociator::generate_random_particle(const std::string & consonance) const
 {
     return get_random_syllable(consonance, SyllableType::PARTICLE);
 }

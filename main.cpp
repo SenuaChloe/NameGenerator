@@ -8,21 +8,27 @@ int main()
 {
     std::srand(time(0));
 
-    map<std::string, SyllablesReader::SyllableType> association_strings;
-    association_strings["Debut"] = SyllablesReader::SyllableType::PREFIX;
-    association_strings["Milieu"] = SyllablesReader::SyllableType::MIDDLE;
-    association_strings["Fin"] = SyllablesReader::SyllableType::SUFFIX;
-    association_strings["Particule"] = SyllablesReader::SyllableType::PARTICLE;
+    map<std::string, SyllableAssociator::SyllableType> association_strings;
+    association_strings["Debut"] = SyllableAssociator::SyllableType::PREFIX;
+    association_strings["Milieu"] = SyllableAssociator::SyllableType::MIDDLE;
+    association_strings["Fin"] = SyllableAssociator::SyllableType::SUFFIX;
+    association_strings["Particule"] = SyllableAssociator::SyllableType::PARTICLE;
 
     const std::string range_string = "Syllabes";
 
     const std::string syllables_filename = "SyllableAssociations.csv";
 
-    SyllablesReader syllable_reader(syllables_filename, association_strings, range_string);
+    SyllableAssociator syllable_reader(syllables_filename, association_strings, range_string);
     auto c_list = syllable_reader.get_consonance_list();
 
-    for (auto c : c_list)
-        std::cout << syllable_reader.generate_random_name(c) << std::endl;
+    while (true)
+    {
+        std::cout << std::endl;
+        for (auto c : c_list)
+            std::cout << c << " : " << syllable_reader.generate_random_name(c) << std::endl;
+        std::cout << std::endl;
+        std::system("pause");
+    }
 
     return 0;
 }

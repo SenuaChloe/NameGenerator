@@ -5,7 +5,7 @@
 #include <map>
 #include <vector>
 
-class SyllablesReader
+class SyllableAssociator
 {
     public:
 
@@ -16,15 +16,23 @@ class SyllablesReader
             PARTICLE
         };
 
+        struct IntRange { int min, max; };
+        using SyllableList = std::vector<std::string>;
+        using SyllableGroup = std::map<SyllableType, SyllableList>;
+        struct ConsonanceGroup { IntRange syllable_count_range; SyllableGroup syllables; };
+        using ConsonanceLabel = std::string;
+        using SyllableDict = std::map<ConsonanceLabel, ConsonanceGroup>;
+        using SyllablePairing = std::map<std::string, SyllableType>;
+
 
         /**
         ** @brief Constructor of the classs. Calls the CSVReader class
         ** @param filepath : path to the CSV file to parse
         ** @param syllable_string_pairing : a map matching the dufferent type of syllables and the string it is refered to in the CSV file
         **/
-        SyllablesReader(const std::filesystem::path & filepath, const std::map<std::string, SyllableType> & syllable_string_pairing, const std::string & count_range_string);
+        SyllableAssociator(const std::filesystem::path & filepath, const SyllablePairing & syllable_string_pairing, const std::string & count_range_string);
 
-        virtual ~SyllablesReader();
+        virtual ~SyllableAssociator();
 
         /**
         ** @brief computes the list of consonances and returns it
@@ -64,11 +72,5 @@ class SyllablesReader
         int get_random_syllable_count(const std::string & consonance) const;
 
     private:
-        struct IntRange { int min, max; };
-        using SyllableList = std::vector<std::string>;
-        using SyllableGroup = std::map<SyllableType, SyllableList>;
-        struct ConsonanceGroup { IntRange syllable_count_range; SyllableGroup syllables; };
-        using ConsonanceName = std::string;
-        using SyllableDict = std::map<ConsonanceName, ConsonanceGroup>;
         SyllableDict m_syllable_dictionary;
 };

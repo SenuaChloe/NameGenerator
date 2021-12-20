@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <ostream>
 #include <exception>
 #include <utility>
@@ -53,6 +54,6 @@ public:
     static void assert(bool predicate, const TArgs & ...args)
     {
         if (!predicate)
-            raise_error<TExceptionType>(args);
+            raise_error<TExceptionType>(args...);
     }
 };

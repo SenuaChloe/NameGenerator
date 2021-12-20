@@ -38,21 +38,21 @@ class SyllableAssociator
         ** @brief computes the list of consonances and returns it
         ** @return the list of consonances available in the dictionary
         **/
-        std::vector<std::string> get_consonance_list() const;
+        std::vector<ConsonanceLabel> get_consonance_list() const;
 
         /**
         ** @brief generates a random name given a consonance
         ** @param consonance : the desired consonance
         ** @return the generated name
         **/
-        std::string generate_random_name(const std::string & consonance) const;
+        std::string generate_random_name(const ConsonanceLabel & consonance) const;
 
         /**
         ** @brief generates a random particle given a consonance
         ** @param consonance : the desired consonance
         ** @return the generated particle
         **/
-        std::string generate_random_particle(const std::string & consonance) const;
+        std::string generate_random_particle(const ConsonanceLabel & consonance) const;
 
     private:
 
@@ -62,14 +62,14 @@ class SyllableAssociator
         ** @param type : the desired type
         ** @return a random syllable from the desired consonance and type
         **/
-        std::string get_random_syllable(const std::string & consonance, SyllableType type) const;
+        std::string get_random_syllable(const ConsonanceLabel & consonance, SyllableType type) const;
 
         /**
         ** @brief gives a random number of syllables matching a given consonance
         ** @param consonance : the desired consonance
         ** @return a random syllable count from the desired consonance
         **/
-        int get_random_syllable_count(const std::string & consonance) const;
+        int get_random_syllable_count(const ConsonanceLabel & consonance) const;
 
     private:
         SyllableDict m_syllable_dictionary;

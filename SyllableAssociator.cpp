@@ -1,8 +1,9 @@
+#include "SyllableAssociator.h"
+
 #include <iostream>
 #include "CSVReader.h"
 #include "ErrorHandler.h"
 
-#include "SyllableAssociator.h"
 
 /******************************************************************************/
 SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath, const SyllablePairing & syllable_string_pairing, const std::string & count_range_string)
@@ -30,7 +31,10 @@ SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath, c
 
             const auto type = syllable_string_pairing.at(type_label);
             for ( ; it != line.cend() ; ++it)
-                m_syllable_dictionary[consonance].syllables[type].push_back(*it);
+            {
+                if (*it != "")
+                    m_syllable_dictionary[consonance].syllables[type].push_back(*it);
+            }
         }
     }
 }
@@ -43,7 +47,7 @@ SyllableAssociator::~SyllableAssociator()
 
 
 /******************************************************************************/
-std::vector<std::string> SyllableAssociator::get_consonance_list() const
+std::vector<SyllableAssociator::ConsonanceLabel> SyllableAssociator::get_consonance_list() const
 {
     std::vector<std::string> consonance_list;
     for (const auto & item : m_syllable_dictionary)
@@ -69,7 +73,7 @@ static std::string syllable_type_to_string(SyllableAssociator::SyllableType type
 }
 
 /******************************************************************************/
-std::string SyllableAssociator::get_random_syllable(const std::string & consonance, SyllableType type) const
+std::string SyllableAssociator::get_random_syllable(const ConsonanceLabel & consonance, SyllableType type) const
 {
     if (m_syllable_dictionary.count(consonance) == 0)
         ErrorHandler::raise_error("Consonance '", consonance, "' not found");
@@ -84,7 +88,7 @@ std::string SyllableAssociator::get_random_syllable(const std::string & consonan
 
 
 /******************************************************************************/
-int SyllableAssociator::get_random_syllable_count(const std::string & consonance) const
+int SyllableAssociator::get_random_syllable_count(const ConsonanceLabel & consonance) const
 {
     if (m_syllable_dictionary.count(consonance) == 0)
         ErrorHandler::raise_error("Consonance '", consonance, "' not found");
@@ -98,7 +102,7 @@ int SyllableAssociator::get_random_syllable_count(const std::string & consonance
 
 /******************************************************************************/
 
-std::string SyllableAssociator::generate_random_name(const std::string & consonance) const
+std::string SyllableAssociator::generate_random_name(const ConsonanceLabel & consonance) const
 {
     std::string result;
     const int s_count = std::max(get_random_syllable_count(consonance)-2, 0);
@@ -112,7 +116,7 @@ std::string SyllableAssociator::generate_random_name(const std::string & consona
 
 
 /******************************************************************************/
-std::string SyllableAssociator::generate_random_particle(const std::string & consonance) const
+std::string SyllableAssociator::generate_random_particle(const ConsonanceLabel & consonance) const
 {
     return get_random_syllable(consonance, SyllableType::PARTICLE);
 }

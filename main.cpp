@@ -1,34 +1,53 @@
 #include <iostream>
 #include "SyllableAssociator.h"
+#include "NameAssociator.h"
 
 
-using namespace std;
+const int C_NUMBER_OF_NAMES_GENERATED = 10;
 
 int main()
 {
     std::srand(time(0));
 
-    map<std::string, SyllableAssociator::SyllableType> association_strings;
-    association_strings["Debut"] = SyllableAssociator::SyllableType::PREFIX;
-    association_strings["Milieu"] = SyllableAssociator::SyllableType::MIDDLE;
-    association_strings["Fin"] = SyllableAssociator::SyllableType::SUFFIX;
-    association_strings["Particule"] = SyllableAssociator::SyllableType::PARTICLE;
+    SyllableAssociator::SyllablePairing syllable_pairing;
+    syllable_pairing["Debut"] = SyllableAssociator::SyllableType::PREFIX;
+    syllable_pairing["Milieu"] = SyllableAssociator::SyllableType::MIDDLE;
+    syllable_pairing["Fin"] = SyllableAssociator::SyllableType::SUFFIX;
+    syllable_pairing["Particule"] = SyllableAssociator::SyllableType::PARTICLE;
+
+    NameAssociator::SymbolNamePairing symbol_name_pairing;
+    symbol_name_pairing['P'] = { NameAssociator::NameType::FIRST_NAME, 1 };
+    symbol_name_pairing['N'] = { NameAssociator::NameType::LAST_NAME, 1 };
+    symbol_name_pairing['Z'] = { NameAssociator::NameType::PARTICLE, 1 };
+    symbol_name_pairing['D'] = { NameAssociator::NameType::PARTICLE, 2 };
+
+    const int buffer_size = 3;
 
     const std::string range_string = "Syllabes";
 
-    const std::string syllables_filename = "SyllableAssociations.csv";
+    const std::filesystem::path syllable_associations_filename = "SyllableAssociations.csv";
+    const std::filesystem::path name_associations_filename = "NameAssociations.csv";
 
-    SyllableAssociator syllable_reader(syllables_filename, association_strings, range_string);
-    auto c_list = syllable_reader.get_consonance_list();
+    SyllableAssociator syllable_associator(syllable_associations_filename, syllable_pairing, range_string);
+    NameAssociator name_associator(name_associations_filename, std::move(syllable_associator), std::move(symbol_name_pairing), buffer_size);
 
-    while (true)
-    {
-        std::cout << std::endl;
-        for (auto c : c_list)
-            std::cout << c << " : " << syllable_reader.generate_random_name(c) << std::endl;
-        std::cout << std::endl;
-        std::system("pause");
-    }
+    const auto region_list = name_associator.get_region_list();
+
+    int i = 0;
+    std::cout << "Make a choice:" <<std::endl;
+    for (auto region: region_list)
+        std::cout << "  " << (i++) << ". " << region << std::endl;
+
+    int choice = 0;
+    do {
+        std::cout << std::endl << "> ";
+        std::cin >> choice;
+    } while (choice >= 0 && choice < region_list.size());
+
+    for (int i = 0 ; i < C_NUMBER_OF_NAMES_GENERATED ; ++i)
+        std::cout << name_associator.generate_random_full_name(region_list[choice]) << std::endl;
+
+    std::system("pause");
 
     return 0;
 }

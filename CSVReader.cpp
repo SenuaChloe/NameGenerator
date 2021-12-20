@@ -1,14 +1,18 @@
+#include "CSVReader.h"
+
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+#include "ErrorHandler.h"
 
-#include "CSVReader.h"
 
 const std::vector<char> CSVReader::C_SEPARATORS = {',',';'};
 
+
+/******************************************************************************/
 CSVReader::CSVReader(const std::filesystem::path & filepath)
 {
-    /// @TODO À protéger
+    ErrorHandler::assert(std::filesystem::exists(filepath), "Error: File '", filepath, "' not found");
 
     // Create an input filestream
     std::ifstream csv_file(filepath);
@@ -36,10 +40,6 @@ CSVReader::CSVReader(const std::filesystem::path & filepath)
         split_line.push_back(line.substr(left, line.size()-left));
 
         m_csv_data.push_back(split_line);
-
-        // Trimming the last cells if they are empty
-        while (m_csv_data.back().begin() != m_csv_data.back().end() && m_csv_data.back().back() == "")
-            m_csv_data.back().pop_back();
     }
 
     // Close file
@@ -47,21 +47,25 @@ CSVReader::CSVReader(const std::filesystem::path & filepath)
 }
 
 
+/******************************************************************************/
 std::vector<std::vector<std::string>>::iterator CSVReader::begin()
 {
     return m_csv_data.begin();
 }
 
+/******************************************************************************/
 std::vector<std::vector<std::string>>::iterator CSVReader::end()
 {
     return m_csv_data.end();
 }
 
+/******************************************************************************/
 std::vector<std::vector<std::string>>::const_iterator CSVReader::cbegin() const
 {
     return m_csv_data.cbegin();
 }
 
+/******************************************************************************/
 std::vector<std::vector<std::string>>::const_iterator CSVReader::cend() const
 {
     return m_csv_data.cend();

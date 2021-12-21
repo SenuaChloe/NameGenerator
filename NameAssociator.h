@@ -32,7 +32,7 @@ class NameAssociator
         ** @param syllable_reader : an instance of the Syllable Associator
         ** @param SymbolNamePairing : How the format symbol should be read
         **/
-        NameAssociator(const std::filesystem::path & filepath, SyllableAssociator && syllable_reader, SymbolNamePairing && symbol_name_association, size_t buffer_size);
+        NameAssociator(const std::filesystem::path & filepath, SyllableAssociator && syllable_reader, SymbolNamePairing && symbol_name_association);
 
         virtual ~NameAssociator();
 

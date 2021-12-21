@@ -21,15 +21,13 @@ int main()
     symbol_name_pairing['Z'] = { NameAssociator::NameType::PARTICLE, 1 };
     symbol_name_pairing['D'] = { NameAssociator::NameType::PARTICLE, 2 };
 
-    const int buffer_size = 3;
-
     const std::string range_string = "Syllabes";
 
     const std::filesystem::path syllable_associations_filename = "SyllableAssociations.csv";
     const std::filesystem::path name_associations_filename = "NameAssociations.csv";
 
     SyllableAssociator syllable_associator(syllable_associations_filename, syllable_pairing, range_string);
-    NameAssociator name_associator(name_associations_filename, std::move(syllable_associator), std::move(symbol_name_pairing), buffer_size);
+    NameAssociator name_associator(name_associations_filename, std::move(syllable_associator), std::move(symbol_name_pairing));
 
     const auto region_list = name_associator.get_region_list();
 
@@ -40,12 +38,16 @@ int main()
 
     int choice = 0;
     do {
-        std::cout << std::endl << "> ";
+        std::cout << "> ";
         std::cin >> choice;
-    } while (choice >= 0 && choice < region_list.size());
+    } while (choice < 0 || choice >= region_list.size());
+
+    std::cout << std::endl;
 
     for (int i = 0 ; i < C_NUMBER_OF_NAMES_GENERATED ; ++i)
         std::cout << name_associator.generate_random_full_name(region_list[choice]) << std::endl;
+
+    std::cout << std::endl;
 
     std::system("pause");
 

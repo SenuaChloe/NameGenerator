@@ -5,18 +5,31 @@
 #include "ErrorHandler.h"
 
 /******************************************************************************/
-NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableAssociator && syllable_reader, SymbolNamePairing && symbol_name_association, size_t buffer_size):
+NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableAssociator && syllable_reader, SymbolNamePairing && symbol_name_association):
             m_syllable_reader(std::forward<SyllableAssociator>(syllable_reader)),
             m_symbol_name_association(std::forward<SymbolNamePairing>(symbol_name_association))
 {
     CSVReader csv_reader(filepath);
 
-    // Filling the syllable dictionary with the data from the CSV
-    for (const auto & line : csv_reader)
-    {
-        ErrorHandler::assert(line.size() < (2+3*buffer_size), "File format is wrong");
+    auto it_line = csv_reader.cbegin();
 
-        auto it = line.cbegin();
+    // Getting data from the first line
+
+    ErrorHandler::assert(it_line->size() == 3, "File format is wrong (initialization data)");
+
+    auto it = it_line->cbegin();
+
+    const int first_name_buffer_size = std::stoi(*it++);
+    const int last_name_buffer_size = std::stoi(*it++);
+    const int particle_buffer_size = std::stoi(*it++);
+    ++it_line;
+
+    // Filling the name generator with the data from the CSV
+    for (; it_line != csv_reader.cend() ; ++it_line)
+    {
+        ErrorHandler::assert(it_line->size() >= (2+first_name_buffer_size+last_name_buffer_size+particle_buffer_size), "File format is wrong (content data)");
+
+        auto it = it_line->cbegin();
         const RegionLabel region_label = *it++;
         m_full_name_dict[region_label].format = *it++;
 
@@ -24,19 +37,19 @@ NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableA
         ConsonanceList last_names;
         ConsonanceList particles;
 
-        for (size_t i = 0 ; i < buffer_size ; ++i)
+        for (size_t i = 0 ; i < first_name_buffer_size ; ++i)
         {
             if (*it != "")
                 first_names.push_back(*it);
             ++it;
         }
-        for (size_t i = 0 ; i < buffer_size ; ++i)
+        for (size_t i = 0 ; i < last_name_buffer_size ; ++i)
         {
             if (*it != "")
                 last_names.push_back(*it);
             ++it;
         }
-        for (size_t i = 0 ; i < buffer_size ; ++i)
+        for (size_t i = 0 ; i < particle_buffer_size ; ++i)
         {
             if (*it != "")
                 particles.push_back(*it);

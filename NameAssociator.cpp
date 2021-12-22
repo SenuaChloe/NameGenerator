@@ -15,7 +15,7 @@ NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableA
 
     // Getting data from the first line
 
-    ErrorHandler::assert(it_line->size() == 3, "File format is wrong (initialization data)");
+    ErrorHandler::assert(it_line->size() >= 3, "File format is wrong (initialization data)");
 
     auto it = it_line->cbegin();
 

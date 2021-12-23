@@ -49,6 +49,13 @@ class NameAssociator
         **/
         std::string generate_random_full_name(const RegionLabel & region) const;
 
+        /**
+        ** @brief generates a formated string of the full name format
+        ** @param region : the desired region
+        ** @return the format formated
+        **/
+        std::string get_formated_full_name_format(const RegionLabel & region) const;
+
 
     private:
 

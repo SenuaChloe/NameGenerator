@@ -42,7 +42,7 @@ int main()
         std::cin >> choice;
     } while (choice < 0 || choice >= region_list.size());
 
-    std::cout << std::endl;
+    std::cout << std::endl << "Format: " << name_associator.get_formated_full_name_format(region_list[choice]) << std::endl << std::endl;
 
     for (int i = 0 ; i < C_NUMBER_OF_NAMES_GENERATED ; ++i)
         std::cout << name_associator.generate_random_full_name(region_list[choice]) << std::endl;

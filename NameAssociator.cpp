@@ -120,3 +120,31 @@ std::string NameAssociator::generate_random_full_name(const RegionLabel & region
     }
     return full_name_result;
 }
+
+
+/******************************************************************************/
+std::string NameAssociator::get_formated_full_name_format(const RegionLabel & region) const
+{
+    std::string result;
+    const std::string source_string = m_full_name_dict.at(region).format;
+
+    for (size_t ic = 0 ; ic < source_string.size() ; ++ic)
+    {
+        const char c = source_string.at(ic);
+        if (m_symbol_name_association.find(c) != m_symbol_name_association.end())
+        {
+            switch (m_symbol_name_association.at(c).name_type)
+            {
+                break; case NameType::FIRST_NAME: result += "[first name]";
+                break; case NameType::LAST_NAME: result += "[last name]";
+                break; case NameType::PARTICLE: result += "[particle]";
+            }
+        }
+        else
+        {
+            result += c;
+        }
+    }
+
+    return result;
+}

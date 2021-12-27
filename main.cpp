@@ -120,7 +120,7 @@ void usage()
     std::endl << "                          name generation.                                      " <<
     std::endl << "    -c --count            The number of random name you want to be generated at " <<
     std::endl << "                          a time. Optionnal. Default value: 10.                 " <<
-    std::endl << "    -g --region           The name of the region from which you want the name to" <<
+    std::endl << "    -r --region           The name of the region from which you want the name to" <<
     std::endl << "                          be generated (leave empty for a random region).       " <<
     std::endl << "                          Optionnal. Default value: <empty>                     " <<
     std::endl << "    -S --syllable-file    The path to the Syllable Associations file (CSV).     " <<

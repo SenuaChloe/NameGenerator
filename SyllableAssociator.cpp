@@ -95,7 +95,6 @@ int SyllableAssociator::get_random_syllable_count(const ConsonanceLabel & conson
 
 
 /******************************************************************************/
-
 std::string SyllableAssociator::generate_random_name(const ConsonanceLabel & consonance) const
 {
     std::string result;
@@ -104,7 +103,6 @@ std::string SyllableAssociator::generate_random_name(const ConsonanceLabel & con
     for (int i = 0 ; i < s_count ; ++i)
         result += get_random_syllable(consonance, SyllableType::MIDDLE);
     result += get_random_syllable(consonance, SyllableType::SUFFIX);
-
     return result;
 }
 

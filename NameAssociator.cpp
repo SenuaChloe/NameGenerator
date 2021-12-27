@@ -93,6 +93,17 @@ std::vector<NameAssociator::RegionLabel> NameAssociator::get_region_list(const s
 
 
 /******************************************************************************/
+static void recase_name(std::string & name)
+{
+    if (name == "")
+        return;
+    name[0] = toupper(name[0]);
+    for (size_t is = 1 ; is < name.size() ; ++is)
+        name[is] = tolower(name[is]);
+}
+
+
+/******************************************************************************/
 std::string NameAssociator::generate_random_full_name(const RegionLabel & region) const
 {
     std::string full_name_result;
@@ -123,8 +134,14 @@ std::string NameAssociator::generate_random_full_name(const RegionLabel & region
             else
                 generated_name = m_syllable_reader.generate_random_name(consonance);
 
+            std::string generated_m_name;
             for (unsigned int m = 0 ; m < name_entity.multiplicity ; ++m)
-                full_name_result += generated_name;
+                generated_m_name += generated_name;
+
+            recase_name(generated_m_name);
+
+            full_name_result += generated_m_name;
+
         }
         else
         {

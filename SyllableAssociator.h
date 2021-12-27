@@ -41,9 +41,6 @@ class SyllableAssociator
         ** @param syllable_string_pairing : a map matching the dufferent type of syllables and the string it is refered to in the CSV file
         **/
         SyllableAssociator(const std::filesystem::path & filepath);
-
-        virtual ~SyllableAssociator();
-
         /**
         ** @brief computes the list of consonances and returns it
         ** @return the list of consonances available in the dictionary

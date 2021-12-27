@@ -41,12 +41,6 @@ SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath)
 
 
 /******************************************************************************/
-SyllableAssociator::~SyllableAssociator()
-{
-}
-
-
-/******************************************************************************/
 std::vector<SyllableAssociator::ConsonanceLabel> SyllableAssociator::get_consonance_list() const
 {
     std::vector<std::string> consonance_list;

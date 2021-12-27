@@ -5,9 +5,9 @@
 #include "ErrorHandler.h"
 
 /******************************************************************************/
-NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableAssociator && syllable_reader, SymbolNamePairing && symbol_name_association):
+NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableAssociator && syllable_reader, SymbolPairing && symbol_pairing):
             m_syllable_reader(std::forward<SyllableAssociator>(syllable_reader)),
-            m_symbol_name_association(std::forward<SymbolNamePairing>(symbol_name_association))
+            m_symbol_pairing(std::forward<SymbolPairing>(symbol_pairing))
 {
     CSVReader csv_reader(filepath);
 
@@ -64,12 +64,6 @@ NameAssociator::NameAssociator(const std::filesystem::path & filepath, SyllableA
 
 
 /******************************************************************************/
-NameAssociator::~NameAssociator()
-{
-}
-
-
-/******************************************************************************/
 std::vector<NameAssociator::RegionLabel> NameAssociator::get_region_list() const
 {
     std::vector<RegionLabel> region_list;
@@ -107,9 +101,9 @@ std::string NameAssociator::generate_random_full_name(const RegionLabel & region
     for (size_t ic = 0 ; ic < format.size() ; ++ic)
     {
         char c = format[ic];
-        if (m_symbol_name_association.find(c) != m_symbol_name_association.end())
+        if (m_symbol_pairing.find(c) != m_symbol_pairing.end())
         {
-            NameEntity name_entity = m_symbol_name_association.at(c);
+            NameEntity name_entity = m_symbol_pairing.at(c);
             std::vector<std::string> consonance_list;
             switch (name_entity.name_type)
             {
@@ -150,9 +144,9 @@ std::string NameAssociator::get_formated_full_name_format(const RegionLabel & re
     for (size_t ic = 0 ; ic < source_string.size() ; ++ic)
     {
         const char c = source_string.at(ic);
-        if (m_symbol_name_association.find(c) != m_symbol_name_association.end())
+        if (m_symbol_pairing.find(c) != m_symbol_pairing.end())
         {
-            switch (m_symbol_name_association.at(c).name_type)
+            switch (m_symbol_pairing.at(c).name_type)
             {
                 break; case NameType::FIRST_NAME: result += "[first name]";
                 break; case NameType::LAST_NAME: result += "[last name]";

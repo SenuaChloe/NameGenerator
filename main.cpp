@@ -77,14 +77,9 @@ int main(int argc, const char *argv[])
 
     std::srand(time(0));
 
-    NameAssociator::SymbolNamePairing symbol_name_pairing;
-    symbol_name_pairing['P'] = { NameAssociator::NameType::FIRST_NAME, 1 };
-    symbol_name_pairing['N'] = { NameAssociator::NameType::LAST_NAME, 1 };
-    symbol_name_pairing['Z'] = { NameAssociator::NameType::PARTICLE, 1 };
-    symbol_name_pairing['D'] = { NameAssociator::NameType::PARTICLE, 2 };
-
+    SymbolPairing symbol_pairing(symbol_pairing_filename);
     SyllableAssociator syllable_associator(syllable_associations_filename);
-    NameAssociator name_associator(name_associations_filename, std::move(syllable_associator), std::move(symbol_name_pairing));
+    NameAssociator name_associator(name_associations_filename, std::move(syllable_associator), std::move(symbol_pairing));
 
     if (chosen_region == "")
     {

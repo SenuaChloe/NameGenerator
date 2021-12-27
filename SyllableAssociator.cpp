@@ -6,7 +6,7 @@
 
 
 /******************************************************************************/
-SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath, const SyllablePairing & syllable_string_pairing, const std::string & count_range_string)
+SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath)
 {
     CSVReader csv_reader(filepath);
 
@@ -17,7 +17,7 @@ SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath, c
         const auto consonance = *it++;
         const auto & type_label = *it++;
 
-        if (type_label == count_range_string)
+        if (type_label == C_RANGE_STRING)
         {
             IntRange count_range;
             count_range.min = std::stoi(*it++);
@@ -26,10 +26,10 @@ SyllableAssociator::SyllableAssociator(const std::filesystem::path & filepath, c
         }
         else
         {
-            if (syllable_string_pairing.find(type_label) == syllable_string_pairing.cend())
+            if (C_SYLLABLE_PAIRING.find(type_label) == C_SYLLABLE_PAIRING.cend())
                 ErrorHandler::raise_error("Error: Syllable type '", type_label, "' is unknown");
 
-            const auto type = syllable_string_pairing.at(type_label);
+            const auto type = C_SYLLABLE_PAIRING.at(type_label);
             for ( ; it != line.cend() ; ++it)
             {
                 if (*it != "")

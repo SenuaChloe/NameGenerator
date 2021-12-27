@@ -25,12 +25,22 @@ class SyllableAssociator
         using SyllablePairing = std::map<std::string, SyllableType>;
 
 
+        const SyllableAssociator::SyllablePairing C_SYLLABLE_PAIRING = {
+                {"PREFIX", SyllableAssociator::SyllableType::PREFIX},
+                {"MIDDLE", SyllableAssociator::SyllableType::MIDDLE},
+                {"SUFFIX", SyllableAssociator::SyllableType::SUFFIX},
+                {"PARTICLE", SyllableAssociator::SyllableType::PARTICLE}
+            };
+
+        const std::string C_RANGE_STRING = "RANGE";
+
+
         /**
         ** @brief Constructor of the classs. Calls the CSVReader class
         ** @param filepath : path to the CSV file to parse
         ** @param syllable_string_pairing : a map matching the dufferent type of syllables and the string it is refered to in the CSV file
         **/
-        SyllableAssociator(const std::filesystem::path & filepath, const SyllablePairing & syllable_string_pairing, const std::string & count_range_string);
+        SyllableAssociator(const std::filesystem::path & filepath);
 
         virtual ~SyllableAssociator();
 

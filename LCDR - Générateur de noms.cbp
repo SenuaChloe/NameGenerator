@@ -39,6 +39,7 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++20" />
 			<Add option="-fexceptions" />
+			<Add directory="C:/Users/vultrao/Workspace/boost_1_78_0/" />
 		</Compiler>
 		<Unit filename="CSVReader.cpp" />
 		<Unit filename="CSVReader.h" />

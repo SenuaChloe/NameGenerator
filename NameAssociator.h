@@ -43,6 +43,13 @@ class NameAssociator
         std::vector<RegionLabel> get_region_list() const;
 
         /**
+        ** @brief computes the list of available regions and returns it (static version only : only reads the first column of the file)
+        ** @param filepath : path to the CSV file to parse
+        ** @return the list of regions available in the dictionary
+        **/
+        static std::vector<RegionLabel> get_region_list(const std::filesystem::path & filepath);
+
+        /**
         ** @brief generates a random name given a region
         ** @param region : the desired region
         ** @return the generated name

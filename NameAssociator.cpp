@@ -80,6 +80,25 @@ std::vector<NameAssociator::RegionLabel> NameAssociator::get_region_list() const
 
 
 /******************************************************************************/
+std::vector<NameAssociator::RegionLabel> NameAssociator::get_region_list(const std::filesystem::path & filepath)
+{
+    std::vector<RegionLabel> region_list;
+
+    CSVReader csv_reader(filepath);
+
+    auto it_line = csv_reader.cbegin();
+
+    ++it_line; // Discarding the first line
+
+    // Filling the name generator with the data from the CSV (taking only the first element of the line)
+    for (; it_line != csv_reader.cend() ; ++it_line)
+        region_list.push_back(*it_line->cbegin());
+
+    return region_list;
+}
+
+
+/******************************************************************************/
 std::string NameAssociator::generate_random_full_name(const RegionLabel & region) const
 {
     std::string full_name_result;

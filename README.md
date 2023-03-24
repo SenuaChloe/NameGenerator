@@ -1,5 +1,5 @@
 # Usage
-This program generates a random full name depending on specific details such as region, consonance, and format and follows a fully-customizable syllables dict (c.f. README.md for more details on how to creates te csutomization files)
+This program generates a random full name depending on specific details such as region, consonance, and format and follows a fully-customizable syllables dict (c.f. README.md for more details on how to creates the csutomization files)
 
 Available options are:
 

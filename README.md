@@ -116,4 +116,8 @@ others anre always lowercase.
 
 If any bug is found, constact me at chloe.lourseyre@gmail.com
 ================================================================================
+    JavaScript
+    
+The folder "JS" contains a JavaScript portage of the program
+================================================================================
 end

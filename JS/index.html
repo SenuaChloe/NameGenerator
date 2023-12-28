@@ -1,0 +1,72 @@
+<head>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="script.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body align=center onLoad="on_load()">
+
+
+  <h1>
+  La Couleur des Roses<br/>
+  G&eacute;n&eacute;rateur de noms
+  </h1>
+  
+  <p id="loading_message">
+    Chargement des donn&eacute;es en cours...<br />
+    <small>(patientez quelques secondes)</small>
+  </p>
+  
+  <p style="color:red" id="error_log"></p>
+  
+  <form id="gen_form">
+    <table>
+    
+    <tr class="adjust_alignment">
+      <td colspan=2>
+        <label>
+          R&eacute;gion : 
+          <select name="region_list" id="region_list" onChange="update_hmi_format();"></select>
+        </label>
+      </td>
+    </tr>
+    
+    <tr class="adjust_alignment">
+      <td colspan=2>
+        Format r&eacute;gional : 
+        <b name="name_format" id="name_format"></b>
+      </td>
+     </tr>
+    
+    <tr class="adjust_alignment">
+      <td colspan=2>
+        <label id="count_field">
+          Nombre de noms &agrave; g&eacute;n&eacute;rer : 
+          <button type="button" onclick="this.nextElementSibling.stepDown()">-</button><input type=number min=5 value=20 step=5 name="generation_count" id="generation_count" onChange="check_count_value();" /><button type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+        </label>
+      </td>
+    </tr>
+
+    
+    <tr>
+      <td colspan=2 id="generation_field">
+        <button type="button" value="G&eacute;n&eacute;rer" name="generation_button" id="generation_button" onClick="on_generate();">G&eacute;nerer</button>
+      </td>
+     </tr>
+    
+    <tr id="results">
+      <td>
+        <ul id="results1"></ul>
+      </td>
+      <td>
+        <ul id="results2"></ul>
+      </td>
+    </tr>
+    
+    </table>
+    
+  </form>
+ 
+  <p style="color:blue" id="log"></p>
+  
+</body>

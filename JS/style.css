@@ -1,0 +1,76 @@
+
+html {
+  text-align: center;
+}
+
+body {
+  width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;
+  display: inline-block;
+}
+
+
+tr, td {
+  padding: 10px;
+  padding-left: 25px;
+}
+
+.adjust_alignment td {
+  padding-left: 175px;  
+}
+
+#generation_count {
+  width: 40px;
+  text-align: center;
+  margin: 0px;
+  border: 1px solid grey;
+  border-left: 0px;
+  border-right: 0px;
+  background-color:white;
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+
+#generation_count::-webkit-inner-spin-button, 
+#generation_count::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+
+#count_field button {
+  width:20px;
+  text-align: center;
+  border: 1px solid grey;
+  background-color:white;
+  margin: 0px;
+}
+
+#count_field input:focus {
+  outline: none !important;
+}
+
+#generation_field {
+  text-align: center;
+}
+
+#generation_button {
+  font-size: 20px;
+}
+
+
+#results td {
+  vertical-align: top;
+  width: 320px;
+}
+
+#results ul {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+#results li {
+  padding: 2px;
+  text-align: left;
+}
